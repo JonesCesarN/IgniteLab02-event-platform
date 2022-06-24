@@ -4,6 +4,8 @@ import { Logo } from '../components/Logo'
 import { useCreateSubscriberMutation } from '../graphql/generated'
 import CodeMackup from '../assets/code-mackup.png'
 
+const codeMackup = new URL('../assets/code-mackup.png', import.meta.url).href
+
 
 export const Subscribre = () => {
   const navigate = useNavigate()
@@ -65,7 +67,7 @@ export const Subscribre = () => {
           </form>
         </div>
       </div>
-      <img src={CodeMackup} className='mt-10' alt="" />
+      <img src={codeMackup} className='mt-10' alt="" />
     </div>
   )
 }
