@@ -21,9 +21,10 @@ export const Sidebar = ({ isNavOpen, setIsNavOpen, slug, screen }: SidebarProps)
 
 
   return (
-    <aside className={classNames("bg-gray-700 p-6 border-l border-gray-600 lg:block", {
+    <aside className={classNames("bg-gray-700 p-6 border-l border-gray-600 ", {
       "w-[348px] transition-all hidden": !isNavOpen && screen < 1024,
-      "w-full md:w-fit absolute z-50 top-18 right-0 h-full transition-all": isNavOpen && screen < 1024
+      "w-full md:w-fit absolute z-50 top-18 right-0 h-full transition-all": isNavOpen && screen < 1024,
+      "w-[348px]": screen > 1023
     })}>
       <span className="font-bold text-2xl pb-6 mb-6 border-b border-gray-500 block">Cronograma de aulas</span>
 
