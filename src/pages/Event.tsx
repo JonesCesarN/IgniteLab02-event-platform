@@ -24,7 +24,7 @@ export const Event = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
-      <main className="flex flex-1">
+      <main className="flex flex-1 flex-col lg:flex-row">
         {slug
           ? <Video lessonSlug={slug} />
           : <div className="flex-1" />
