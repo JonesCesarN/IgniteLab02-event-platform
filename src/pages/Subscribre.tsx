@@ -40,7 +40,7 @@ export const Subscribre = () => {
           </p>
         </div>
 
-        <div className='p-8 bg-gray-700 border border-gray-500 rounded mt-[32px] lg:mt-0 w-screen lg:w-fit'>
+        <div className='p-8 bg-gray-700 border border-gray-500 rounded mt-[32px] lg:mt-0 w-screen sm:w-[70%] md:w-[50%] lg:w-fit'>
           <strong className='text-lg lg:text-2xl mg-6 block'>Inscreva-se gratuitamente</strong>
 
           <form onSubmit={handleSubscribe} className='flex flex-col gap-2 w-full mt-4'>
