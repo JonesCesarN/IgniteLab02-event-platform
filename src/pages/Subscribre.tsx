@@ -28,7 +28,7 @@ export const Subscribre = () => {
   }
 
   return (
-    <div className='min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center p-4'>
+    <div className='min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center p-4  overflow-hidden'>
       <div className='w-full max-w-[1100px] flex flex-col lg:flex-row items-center justify-between mt-10 lg:mt-20 mx-auto'>
         <div className='max-w-[640px] flex flex-col items-center lg:block'>
           <Logo />
@@ -40,10 +40,10 @@ export const Subscribre = () => {
           </p>
         </div>
 
-        <div className='p-8 bg-gray-700 border border-gray-500 rounded mt-[32px] lg:mt-0'>
-          <strong className='text-2xl mg-6 block'>Inscreva-se gratuitamente</strong>
+        <div className='p-8 bg-gray-700 border border-gray-500 rounded mt-[32px] lg:mt-0 w-screen lg:w-fit'>
+          <strong className='text-lg lg:text-2xl mg-6 block'>Inscreva-se gratuitamente</strong>
 
-          <form onSubmit={handleSubscribe} className='flex flex-col gap-2 w-full'>
+          <form onSubmit={handleSubscribe} className='flex flex-col gap-2 w-full mt-4'>
             <input
               className='bg-gray-900 rounded px-5 h-14'
               type="text"
