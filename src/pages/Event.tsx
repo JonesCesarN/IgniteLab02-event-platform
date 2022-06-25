@@ -33,7 +33,7 @@ export const Event = () => {
           ? <Video lessonSlug={slug} />
           : <div className="flex-1" />
         }
-        <Sidebar isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} slug={slug} />
+        <Sidebar isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} slug={slug} screen={screen} />
 
       </main>
     </div>
