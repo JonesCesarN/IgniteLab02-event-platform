@@ -14,6 +14,8 @@ export const Event = () => {
   useEffect(() => {
     updateDimensions();
     window.addEventListener("resize", updateDimensions);
+    console.log('reload')
+
   }, []);
 
   const updateDimensions = () => {
@@ -21,15 +23,16 @@ export const Event = () => {
     setScreen(width)
   };
 
+
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen relative">
       <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
       <main className="flex flex-1 flex-col lg:flex-row">
         {slug
           ? <Video lessonSlug={slug} />
           : <div className="flex-1" />
         }
-        {screen > 1023 && <Sidebar />}
+        <Sidebar isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
 
       </main>
     </div>

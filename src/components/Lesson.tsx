@@ -9,6 +9,7 @@ interface LessonProps {
   slug: string;
   availableAt: Date;
   type: "live" | "class";
+  setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 export const Lesson = (props: LessonProps) => {
@@ -19,8 +20,12 @@ export const Lesson = (props: LessonProps) => {
 
   const isActiveLesson = slug === props.slug
 
+  function handleLesson() {
+    props.setIsNavOpen(false)
+  }
+
   return (
-    <Link to={`/event/lesson/${props.slug}`} className="group">
+    <Link to={`/event/lesson/${props.slug}`} className="group" onClick={handleLesson}>
       <span className="text-gray-300">
         {availableDateFormatted}
       </span>

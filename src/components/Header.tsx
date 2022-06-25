@@ -16,7 +16,7 @@ export const Header = ({ isNavOpen, setIsNavOpen }: HeaderProps) => {
 
     })}>
       <Logo width="167" />
-      <nav className="flex items-center gap-3 ">
+      <nav className="flex items-center gap-3 lg:hidden">
         <span className="text-sm">Aulas</span>
         <button className={!isNavOpen ? 'flex' : 'hidden'}>
           <FontAwesomeIcon icon={faBars}
