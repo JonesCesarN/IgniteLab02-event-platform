@@ -1,19 +1,28 @@
 import { useGetLessonsQuery } from "../graphql/generated";
 import { Lesson } from "./Lesson";
 import classNames from 'classnames'
+import { useNavigate } from "react-router-dom";
 
 interface SidebarProps {
   isNavOpen: boolean,
-  setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>,
+  slug?: string
 }
 
-export const Sidebar = ({ isNavOpen, setIsNavOpen }: SidebarProps) => {
+export const Sidebar = ({ isNavOpen, setIsNavOpen, slug }: SidebarProps) => {
   const { data } = useGetLessonsQuery()
+  const navigation = useNavigate()
+  if (data) {
+    let slugLast = data.lessons[0].slug
+    if (!slug) navigation('/event/lesson/' + slugLast)
+
+  }
+
 
   return (
     <aside className={classNames("bg-gray-700 p-6 border-l border-gray-600", {
-      "w-[348px]": !isNavOpen,
-      "w-full md:w-fit absolute z-50 top-18 right-0 h-full": isNavOpen
+      "w-[348px] transition-all": !isNavOpen,
+      "w-full md:w-fit absolute z-50 top-18 right-0 h-full transition-all": isNavOpen
     })}>
       <span className="font-bold text-2xl pb-6 mb-6 border-b border-gray-500 block">Cronograma de aulas</span>
 
