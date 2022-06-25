@@ -4165,6 +4165,7 @@ export type Subscriber = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
+  uidGithub?: Maybe<Scalars['Int']>;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime'];
   /** User that last updated this document */
@@ -4232,6 +4233,7 @@ export type SubscriberCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
   name: Scalars['String'];
+  uidGithub?: InputMaybe<Scalars['Int']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4360,6 +4362,21 @@ export type SubscriberManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  uidGithub?: InputMaybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  uidGithub_gt?: InputMaybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  uidGithub_gte?: InputMaybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  uidGithub_in?: InputMaybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  uidGithub_lt?: InputMaybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  uidGithub_lte?: InputMaybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  uidGithub_not?: InputMaybe<Scalars['Int']>;
+  /** All values that are not contained in given list. */
+  uidGithub_not_in?: InputMaybe<Array<Scalars['Int']>>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -4389,6 +4406,8 @@ export enum SubscriberOrderByInput {
   NameDesc = 'name_DESC',
   PublishedAtAsc = 'publishedAt_ASC',
   PublishedAtDesc = 'publishedAt_DESC',
+  UidGithubAsc = 'uidGithub_ASC',
+  UidGithubDesc = 'uidGithub_DESC',
   UpdatedAtAsc = 'updatedAt_ASC',
   UpdatedAtDesc = 'updatedAt_DESC'
 }
@@ -4396,6 +4415,7 @@ export enum SubscriberOrderByInput {
 export type SubscriberUpdateInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
+  uidGithub?: InputMaybe<Scalars['Int']>;
 };
 
 export type SubscriberUpdateManyInlineInput = {
@@ -4417,6 +4437,7 @@ export type SubscriberUpdateManyInlineInput = {
 
 export type SubscriberUpdateManyInput = {
   name?: InputMaybe<Scalars['String']>;
+  uidGithub?: InputMaybe<Scalars['Int']>;
 };
 
 export type SubscriberUpdateManyWithNestedWhereInput = {
@@ -4564,6 +4585,21 @@ export type SubscriberWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
+  uidGithub?: InputMaybe<Scalars['Int']>;
+  /** All values greater than the given value. */
+  uidGithub_gt?: InputMaybe<Scalars['Int']>;
+  /** All values greater than or equal the given value. */
+  uidGithub_gte?: InputMaybe<Scalars['Int']>;
+  /** All values that are contained in given list. */
+  uidGithub_in?: InputMaybe<Array<Scalars['Int']>>;
+  /** All values less than the given value. */
+  uidGithub_lt?: InputMaybe<Scalars['Int']>;
+  /** All values less than or equal the given value. */
+  uidGithub_lte?: InputMaybe<Scalars['Int']>;
+  /** All values that are not equal to given value. */
+  uidGithub_not?: InputMaybe<Scalars['Int']>;
+  /** All values that are not contained in given list. */
+  uidGithub_not_in?: InputMaybe<Array<Scalars['Int']>>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
