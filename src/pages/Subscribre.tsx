@@ -32,9 +32,9 @@ export const Subscribre = () => {
   }
 
   useEffect(() => {
-    let count = redirectTimeout
     if (isRegister) {
       setInterval(function () {
+        let count = redirectTimeout
         count--
         setRedirectTimeout(count)
       }, 1000)
