@@ -6,3 +6,8 @@ body {
   @apply bg-gray-900 text-gray-100;
   -webkit-font-smoothing: antialiased;
 }
+
+.separador {
+  @apply after:bg-gray-500 after:inline-block after:w-[40px] after:h-[1px] after:m-1;
+  @apply before:bg-gray-500 before:inline-block before:w-[40px] before:h-[1px] before:m-1;
+}

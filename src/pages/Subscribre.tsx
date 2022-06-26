@@ -1,9 +1,9 @@
 import classNames from 'classnames'
 import { useState, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
+import { AuthGithub } from '../components/AuthGithub'
 import { Logo } from '../components/Logo'
 import { useCreateSubscriberMutation } from '../graphql/generated'
-
 const codeMackup = new URL('../assets/code-mackup.png', import.meta.url).href
 
 export const Subscribre = () => {
@@ -48,7 +48,7 @@ export const Subscribre = () => {
 
   return (
     <div className='min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center p-4  overflow-hidden'>
-      <div className='w-full max-w-[1100px] flex flex-col lg:flex-row items-center justify-between mt-10 lg:mt-20 mx-auto'>
+      <div className='w-full max-w-[1100px] flex flex-col lg:flex-row items-center justify-between mt-10 mx-auto'>
         <div className='max-w-[640px] flex flex-col items-center lg:block'>
           <Logo />
           <h1 className='mt-8 text-[1.25rem] lg:text-[2.5rem] leading-tight'>
@@ -98,6 +98,7 @@ export const Subscribre = () => {
             </span>
 
 
+
             {isRegister
               ? (
 
@@ -117,11 +118,15 @@ export const Subscribre = () => {
               )
             }
 
+            <span className='text-gray-300 text-center p-3 flex items-center separador justify-center' > Or, use social login </span>
+
+            <AuthGithub className="flex justify-center items-center gap-4 py-4 rounded bg-github-100" />
+
 
           </form>
         </div>
       </div>
-      <img src={codeMackup} className='mt-4 lg:mt-10' alt="" />
+      <img src={codeMackup} alt="" />
     </div>
   )
 }
