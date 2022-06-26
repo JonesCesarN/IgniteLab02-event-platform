@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import { useState, FormEvent } from 'react'
+import { useState, FormEvent, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthGithub } from '../components/AuthGithub'
 import { Logo } from '../components/Logo'
@@ -15,10 +15,31 @@ export const Subscribre = () => {
   const [emailError, setEmailError] = useState(false)
 
   const [isRegister, setIsRegister] = useState(false)
+  const [redirectTimeout, setRedirectTimeout] = useState(5)
 
   const [error, setError] = useState<string>('')
 
   const [createSubscriber, { loading }] = useCreateSubscriberMutation({ errorPolicy: 'all' })
+
+  function redirectIsRegister() {
+
+    setTimeout(function () {
+      window.location.href = '/event';
+    }, 5000);
+
+
+
+  }
+
+  useEffect(() => {
+    let count = redirectTimeout
+    if (isRegister) {
+      setInterval(function () {
+        count--
+        setRedirectTimeout(count)
+      }, 1000)
+    }
+  }, [isRegister, redirectTimeout, setRedirectTimeout])
 
 
   async function handleSubscribe(e: FormEvent) {
@@ -38,7 +59,10 @@ export const Subscribre = () => {
       })
     } catch (err: any) {
       let message = err.networkError.result.errors[0].message
-      if (message == 'value is not unique for the field "email"') setIsRegister(true)
+      if (message == 'value is not unique for the field "email"') {
+        setIsRegister(true)
+        redirectIsRegister()
+      }
     }
 
     if (error) console.log(error)
@@ -64,12 +88,13 @@ export const Subscribre = () => {
 
           <form onSubmit={handleSubscribe} className='flex flex-col gap-2 w-full mt-4'>
             <input
-              className={classNames('bg-gray-900 rounded px-5 h-14 outline-none ', {
+              className={classNames('bg-gray-900 rounded px-5 h-10 outline-none ', {
                 'border border-red-500': nameError,
-                'focus:outline-green-500 border-0': !nameError || isRegister,
-                'border border-green-500': isRegister
+                'focus:outline-green-500 border-0': !nameError,
+                'border-0 bg-transparent text-center text-2xl mt-6 disabled:hover:none text-green-700': isRegister
               })}
               type="email"
+              disabled={isRegister ? true : false}
               placeholder='Digite seu e-mail'
               onChange={e => setEmail(e.target.value)}
             />
@@ -80,7 +105,7 @@ export const Subscribre = () => {
               Digite seu email para garantir a vaga.
             </span>
             <input
-              className={classNames('bg-gray-900 rounded px-5 h-14 outline-none ', {
+              className={classNames('bg-gray-900 rounded px-5 h-10 outline-none ', {
                 'border border-red-500': nameError,
                 'focus:outline-green-500 border-0': !nameError,
                 'hidden': isRegister
@@ -102,25 +127,29 @@ export const Subscribre = () => {
             {isRegister
               ? (
 
-                <Link to="/event" className='text-center mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50'>
-                  Acessar aulas
+                <Link to="/event" className='text-center mt-4 uppercase py-4 rounded font-bold text-sm text-blue-500  transition-colors disabled:opacity-50'>
+                  <p>Redirecionando para aulas...</p>
+                  <p>{redirectTimeout} segundos</p>
                 </Link>
 
               )
               : (
-                <button
-                  type="submit"
-                  disabled={loading}
-                  className='mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50'
-                >
-                  Garantir minha vaga
-                </button>
+                <>
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className='mt-4 bg-green-500 uppercase py-2 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50'
+                  >
+                    Garantir minha vaga
+                  </button>
+                  <span className='text-gray-300 text-center p-3 flex items-center separador justify-center' > ou, use social login </span>
+
+                  <AuthGithub className="flex justify-center items-center gap-4 py-2 rounded bg-github-100" />
+                </>
               )
             }
 
-            <span className='text-gray-300 text-center p-3 flex items-center separador justify-center' > Or, use social login </span>
 
-            <AuthGithub className="flex justify-center items-center gap-4 py-4 rounded bg-github-100" />
 
 
           </form>

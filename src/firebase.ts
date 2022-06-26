@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
 import { GithubAuthProvider, getAuth, signInWithPopup, signOut } from "firebase/auth";
+import { FormEvent } from "react";
 
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
@@ -16,13 +17,13 @@ const auth = getAuth(app);
 
 const GithubProvider = new GithubAuthProvider();
 
-const sinInWithGithub = async () => {
+const sinInWithGithub = async (e: FormEvent) => {
   try {
+    e.preventDefault();
     const res = await signInWithPopup(auth, GithubProvider);
     return res;
   } catch (err: unknown) {
     if (err instanceof Error) {
-      console.log(err.message); // works, `e` narrowed to Error
       return err.message;
     }
   }
