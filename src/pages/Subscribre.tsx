@@ -1,30 +1,49 @@
+import classNames from 'classnames'
 import { useState, FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Logo } from '../components/Logo'
 import { useCreateSubscriberMutation } from '../graphql/generated'
 
 const codeMackup = new URL('../assets/code-mackup.png', import.meta.url).href
 
-
 export const Subscribre = () => {
-  const navigate = useNavigate()
-
   const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
+  const [nameError, setNameError] = useState(false)
+  if (name.length > 0 && nameError) setNameError(false)
 
-  const [createSubscriber, { loading }] = useCreateSubscriberMutation()
+  const [email, setEmail] = useState('')
+  const [emailError, setEmailError] = useState(false)
+
+  const [isRegister, setIsRegister] = useState(false)
+
+  const [error, setError] = useState<string>('')
+
+  const [createSubscriber, { loading }] = useCreateSubscriberMutation({ errorPolicy: 'all' })
+
 
   async function handleSubscribe(e: FormEvent) {
     e.preventDefault()
 
-    await createSubscriber({
-      variables: {
-        name,
-        email,
-      },
-    })
+    if (!email) setEmailError(true)
+    else setEmailError(false)
 
-    navigate('/event')
+    if (!name) setNameError(true)
+
+    try {
+      await createSubscriber({
+        variables: {
+          name,
+          email,
+        },
+      })
+    } catch (err: any) {
+      let message = err.networkError.result.errors[0].message
+      if (message == 'value is not unique for the field "email"') setIsRegister(true)
+    }
+
+    if (error) console.log(error)
+
+    // navigate('/event')
   }
 
   return (
@@ -41,28 +60,64 @@ export const Subscribre = () => {
         </div>
 
         <div className='p-8 bg-gray-700 border border-gray-500 rounded mt-[32px] lg:mt-0 w-screen sm:w-[70%] md:w-[50%] lg:w-fit'>
-          <strong className='text-lg lg:text-2xl mg-6 block'>Inscreva-se gratuitamente</strong>
+          <strong className='text-lg lg:text-2xl mg-6 block'>{isRegister ? `Esse email já foi registrado!` : 'Inscreva-se gratuitamente'}</strong>
 
           <form onSubmit={handleSubscribe} className='flex flex-col gap-2 w-full mt-4'>
             <input
-              className='bg-gray-900 rounded px-5 h-14'
-              type="text"
-              placeholder='Seu nome completo'
-              onChange={e => setName(e.target.value)}
-            />
-            <input
-              className='bg-gray-900 rounded px-5 h-14'
+              className={classNames('bg-gray-900 rounded px-5 h-14 outline-none ', {
+                'border border-red-500': nameError,
+                'focus:outline-green-500 border-0': !nameError || isRegister,
+                'border border-green-500': isRegister
+              })}
               type="email"
               placeholder='Digite seu e-mail'
               onChange={e => setEmail(e.target.value)}
             />
-            <button
-              type="submit"
-              disabled={loading}
-              className='mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50'
-            >
-              Garantir minha vaga
-            </button>
+            <span className={classNames('text-xs bg-red-600 p-2 font-bold text-center mb-2 animate-pulse ', {
+              'block': emailError,
+              'hidden': !emailError,
+            })}>
+              Digite seu email para garantir a vaga.
+            </span>
+            <input
+              className={classNames('bg-gray-900 rounded px-5 h-14 outline-none ', {
+                'border border-red-500': nameError,
+                'focus:outline-green-500 border-0': !nameError,
+                'hidden': isRegister
+              })}
+              type="text"
+              placeholder='Seu nome completo'
+              onChange={e => setName(e.target.value)}
+            />
+            <span className={classNames('text-xs bg-red-600 p-2 font-bold text-center mb-2 animate-pulse ', {
+              'block': nameError,
+              'hidden': !nameError || isRegister,
+
+            })}>
+              Digite seu nome para garantir a vaga.
+            </span>
+
+
+            {isRegister
+              ? (
+
+                <Link to="/event" className='text-center mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50'>
+                  Acessar aulas
+                </Link>
+
+              )
+              : (
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className='mt-4 bg-green-500 uppercase py-4 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50'
+                >
+                  Garantir minha vaga
+                </button>
+              )
+            }
+
+
           </form>
         </div>
       </div>
