@@ -4,7 +4,7 @@ import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { Video } from "../components/Video";
-import { auth, logout } from "../firebase";
+import { auth } from "../firebase";
 
 export const Event = () => {
   const { slug } = useParams<{ slug: string }>()
@@ -30,7 +30,7 @@ export const Event = () => {
   return (
     <div className="flex flex-col min-h-screen relative">
       <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
-      <button onClick={() => logout()}>logout</button>
+
 
       <main className="flex flex-1 flex-col lg:flex-row">
         {slug
