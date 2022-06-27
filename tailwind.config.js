@@ -33,6 +33,14 @@ module.exports = {
           700: "#121214",
           900: "#09090A",
         },
+        github: {
+          100: '#0E0E0E'
+        }
+      },
+      keyframes: {
+        float: {
+          '100%': { transform: ' translateY(20px)' }
+        }
       },
     },
   },

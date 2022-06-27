@@ -12,13 +12,13 @@ interface SidebarProps {
 
 export const Sidebar = ({ isNavOpen, setIsNavOpen, slug, screen }: SidebarProps) => {
   const { data } = useGetLessonsQuery()
+
   const navigation = useNavigate()
   if (data) {
     let slugLast = data.lessons[0].slug
     if (!slug) navigation('/event/lesson/' + slugLast)
 
   }
-
 
   return (
     <aside className={classNames("bg-gray-700 p-6 border-l border-gray-600 ", {

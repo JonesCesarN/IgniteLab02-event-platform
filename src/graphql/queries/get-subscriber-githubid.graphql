@@ -1,0 +1,8 @@
+query GetSubscriberGithubID($uidGithub: String) {
+  subscribers(where: { uidGithub: $uidGithub }) {
+    email
+    id
+    name
+    uidGithub
+  }
+}
