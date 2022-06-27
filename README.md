@@ -23,9 +23,9 @@ Pequeno projeto onde aprendi varios conceitos sobre ReactJS, Tailwind, Graphql, 
 # Desafios
 - [x] Tornar responsivo.
 - [x] Menu dropdown versão mobile/tablet.
-- [ ] Validação de dev ja cadastrado mudar botão para acessar evento.
-- [ ] Vincular cadastro com Github.
-- [ ] Login com Github.
+- [x] Validação de dev ja cadastrado mudar botão para acessar aulas.
+- [x] Login com Github.
+- [x] Logout
 
 # Preview prints
 ![image](https://user-images.githubusercontent.com/68172438/175789361-cddfc4d9-a509-4ad2-a57e-695b554bab38.png)
