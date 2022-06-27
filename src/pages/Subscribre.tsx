@@ -1,77 +1,54 @@
 import classNames from 'classnames'
 import { useState, FormEvent, useEffect } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { FaGithub } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { AuthGithub } from '../components/AuthGithub'
 import { Logo } from '../components/Logo'
-import { useCreateSubscriberMutation } from '../graphql/generated'
+import { auth, logout, sinInWithGithub } from '../firebase'
+import { useCreateSubscriberMutation, useGetSubscriberGithubIdQuery as GetSubscriberGithubIdQuery } from '../graphql/generated'
 const codeMackup = new URL('../assets/code-mackup.png', import.meta.url).href
 
+interface IErrPage {
+  name: boolean,
+  email: boolean
+}
+
 export const Subscribre = () => {
-  const [name, setName] = useState('')
-  const [nameError, setNameError] = useState(false)
-  if (name.length > 0 && nameError) setNameError(false)
+  const [isGithub, setIsGithub] = useState(false)
 
-  const [email, setEmail] = useState('')
-  const [emailError, setEmailError] = useState(false)
+  const [createSubscriber, { loading: loadingMutation }] = useCreateSubscriberMutation({ errorPolicy: 'all' })
+  const [user, loading, error] = useAuthState(auth)
 
-  const [isRegister, setIsRegister] = useState(false)
-  const [redirectTimeout, setRedirectTimeout] = useState(5)
+  const { data, error: errorsub, loading: loadingsub } = GetSubscriberGithubIdQuery({
+    variables: {
+      uidGithub: user?.uid
+    },
+    errorPolicy: 'all'
+  })
 
-  const [error, setError] = useState<string>('')
-
-  const [createSubscriber, { loading }] = useCreateSubscriberMutation({ errorPolicy: 'all' })
-
-  function redirectIsRegister() {
-
-    setTimeout(function () {
-      window.location.href = '/event';
-    }, 5000);
-
-
-
-  }
-
-  useEffect(() => {
-    if (isRegister) {
-      setInterval(function () {
-        let count = redirectTimeout
-        count--
-        setRedirectTimeout(count)
-      }, 1000)
-    }
-  }, [isRegister, redirectTimeout, setRedirectTimeout])
-
-
-  async function handleSubscribe(e: FormEvent) {
-    e.preventDefault()
-
-    if (!email) setEmailError(true)
-    else setEmailError(false)
-
-    if (!name) setNameError(true)
-
-    try {
-      await createSubscriber({
+  if (!loadingsub && !loadingMutation && !loading && !isGithub) {
+    if (data?.subscribers.length === 0 && user?.email && user?.displayName) {
+      createSubscriber({
         variables: {
-          name,
-          email,
+          name: user.displayName,
+          email: user.email,
+          uidGithub: user.uid
         },
       })
-    } catch (err: any) {
-      let message = err.networkError.result.errors[0].message
-      if (message == 'value is not unique for the field "email"') {
-        setIsRegister(true)
-        redirectIsRegister()
-      }
+    } else if (data?.subscribers.length === 1) {
+      setIsGithub(true)
     }
+  }
 
-    if (error) console.log(error)
-
-    // navigate('/event')
+  const handleAuthGithub = (e: FormEvent) => {
+    e.preventDefault();
+    sinInWithGithub()
   }
 
   return (
+
     <div className='min-h-screen bg-blur bg-cover bg-no-repeat flex flex-col items-center p-4  overflow-hidden'>
+
       <div className='w-full max-w-[1100px] flex flex-col lg:flex-row items-center justify-between mt-10 mx-auto'>
         <div className='max-w-[640px] flex flex-col items-center lg:block'>
           <Logo />
@@ -82,77 +59,32 @@ export const Subscribre = () => {
             Em apenas uma semana você vai dominar na prática uma das tecnologias mais utilizadas e com alta demanda para acessar as melhores oportunidades do mercado.
           </p>
         </div>
+        <div className='p-8 bg-gray-600 border border-gray-500 rounded mt-[32px] lg:mt-0 w-screen sm:w-[70%] md:w-[50%] lg:w-fit'>
+          <strong className='text-lg lg:text-2xl mg-6 block'>
+            {isGithub && user?.displayName ? `Olá ${user?.displayName}! Bem vindo` : 'Inscreva-se gratuitamente'}
+          </strong>
 
-        <div className='p-8 bg-gray-700 border border-gray-500 rounded mt-[32px] lg:mt-0 w-screen sm:w-[70%] md:w-[50%] lg:w-fit'>
-          <strong className='text-lg lg:text-2xl mg-6 block'>{isRegister ? `Esse email já foi registrado!` : 'Inscreva-se gratuitamente'}</strong>
+          <div className='flex flex-col gap-2 w-full mt-4'>
 
-          <form onSubmit={handleSubscribe} className='flex flex-col gap-2 w-full mt-4'>
-            <input
-              className={classNames('bg-gray-900 rounded px-5 h-10 outline-none ', {
-                'border border-red-500': nameError,
-                'focus:outline-green-500 border-0': !nameError,
-                'border-0 bg-transparent text-center text-2xl mt-6 disabled:hover:none text-green-700': isRegister
-              })}
-              type="email"
-              disabled={isRegister ? true : false}
-              placeholder='Digite seu e-mail'
-              onChange={e => setEmail(e.target.value)}
-            />
-            <span className={classNames('text-xs bg-red-600 p-2 font-bold text-center mb-2 animate-pulse ', {
-              'block': emailError,
-              'hidden': !emailError,
-            })}>
-              Digite seu email para garantir a vaga.
-            </span>
-            <input
-              className={classNames('bg-gray-900 rounded px-5 h-10 outline-none ', {
-                'border border-red-500': nameError,
-                'focus:outline-green-500 border-0': !nameError,
-                'hidden': isRegister
-              })}
-              type="text"
-              placeholder='Seu nome completo'
-              onChange={e => setName(e.target.value)}
-            />
-            <span className={classNames('text-xs bg-red-600 p-2 font-bold text-center mb-2 animate-pulse ', {
-              'block': nameError,
-              'hidden': !nameError || isRegister,
-
-            })}>
-              Digite seu nome para garantir a vaga.
-            </span>
-
-
-
-            {isRegister
+            {isGithub && user?.displayName
               ? (
-
-                <Link to="/event" className='text-center mt-4 uppercase py-4 rounded font-bold text-sm text-blue-500  transition-colors disabled:opacity-50'>
-                  <p>Redirecionando para aulas...</p>
-                  <p>{redirectTimeout} segundos</p>
+                <Link to="/event"
+                  className='text-center mt-4 bg-green-500 uppercase py-2 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50'>
+                  Ir para aulas
                 </Link>
-
               )
-              : (
-                <>
-                  <button
-                    type="submit"
-                    disabled={loading}
-                    className='mt-4 bg-green-500 uppercase py-2 rounded font-bold text-sm hover:bg-green-700 transition-colors disabled:opacity-50'
-                  >
-                    Garantir minha vaga
-                  </button>
-                  <span className='text-gray-300 text-center p-3 flex items-center separador justify-center' > ou, use social login </span>
-
-                  <AuthGithub className="flex justify-center items-center gap-4 py-2 rounded bg-github-100" />
-                </>
+              :
+              (
+                <button
+                  disabled={loading}
+                  className="flex justify-center items-center gap-4 py-2 rounded bg-github-100"
+                  onClick={handleAuthGithub}>
+                  <FaGithub />
+                  Entre com o GitHub
+                </button>
               )
             }
-
-
-
-
-          </form>
+          </div>
         </div>
       </div>
       <img src={codeMackup} alt="" />

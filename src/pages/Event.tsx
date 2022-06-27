@@ -1,14 +1,20 @@
 import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { Header } from "../components/Header";
 import { Sidebar } from "../components/Sidebar";
 import { Video } from "../components/Video";
+import { auth, logout } from "../firebase";
 
 export const Event = () => {
   const { slug } = useParams<{ slug: string }>()
 
   const [isNavOpen, setIsNavOpen] = useState(false);
   const [screen, setScreen] = useState<number>(0)
+  const [user, loading, error] = useAuthState(auth)
+  const navigate = useNavigate()
+
+  if (!user && !loading) navigate('/')
 
   useEffect(() => {
     updateDimensions();
@@ -24,6 +30,8 @@ export const Event = () => {
   return (
     <div className="flex flex-col min-h-screen relative">
       <Header isNavOpen={isNavOpen} setIsNavOpen={setIsNavOpen} />
+      <button onClick={() => logout()}>logout</button>
+
       <main className="flex flex-1 flex-col lg:flex-row">
         {slug
           ? <Video lessonSlug={slug} />

@@ -11,3 +11,26 @@ body {
   @apply after:bg-gray-500 after:inline-block after:w-[40px] after:h-[1px] after:m-1;
   @apply before:bg-gray-500 before:inline-block before:w-[40px] before:h-[1px] before:m-1;
 }
+
+@keyframes float {
+  100% {
+    transform: translateY(20px);
+  }
+}
+
+.notfoundanimate {
+  animation: float 1s infinite ease-in-out alternate;
+}
+
+.notfoundanimate2 {
+  animation-delay: 0.2s;
+}
+.notfoundanimate3 {
+  animation-delay: 0.4s;
+}
+.notfoundanimate4 {
+  animation-delay: 0.6s;
+}
+.notfoundanimate5 {
+  animation-delay: 0.8s;
+}

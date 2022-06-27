@@ -4165,7 +4165,7 @@ export type Subscriber = Node & {
   scheduledIn: Array<ScheduledOperation>;
   /** System stage field */
   stage: Stage;
-  uidGithub?: Maybe<Scalars['Int']>;
+  uidGithub?: Maybe<Scalars['String']>;
   /** The time the document was updated */
   updatedAt: Scalars['DateTime'];
   /** User that last updated this document */
@@ -4233,7 +4233,7 @@ export type SubscriberCreateInput = {
   createdAt?: InputMaybe<Scalars['DateTime']>;
   email: Scalars['String'];
   name: Scalars['String'];
-  uidGithub?: InputMaybe<Scalars['Int']>;
+  uidGithub?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
 };
 
@@ -4362,21 +4362,25 @@ export type SubscriberManyWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  uidGithub?: InputMaybe<Scalars['Int']>;
-  /** All values greater than the given value. */
-  uidGithub_gt?: InputMaybe<Scalars['Int']>;
-  /** All values greater than or equal the given value. */
-  uidGithub_gte?: InputMaybe<Scalars['Int']>;
+  uidGithub?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  uidGithub_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  uidGithub_ends_with?: InputMaybe<Scalars['String']>;
   /** All values that are contained in given list. */
-  uidGithub_in?: InputMaybe<Array<Scalars['Int']>>;
-  /** All values less than the given value. */
-  uidGithub_lt?: InputMaybe<Scalars['Int']>;
-  /** All values less than or equal the given value. */
-  uidGithub_lte?: InputMaybe<Scalars['Int']>;
+  uidGithub_in?: InputMaybe<Array<Scalars['String']>>;
   /** All values that are not equal to given value. */
-  uidGithub_not?: InputMaybe<Scalars['Int']>;
+  uidGithub_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  uidGithub_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  uidGithub_not_ends_with?: InputMaybe<Scalars['String']>;
   /** All values that are not contained in given list. */
-  uidGithub_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  uidGithub_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  uidGithub_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  uidGithub_starts_with?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -4415,7 +4419,7 @@ export enum SubscriberOrderByInput {
 export type SubscriberUpdateInput = {
   email?: InputMaybe<Scalars['String']>;
   name?: InputMaybe<Scalars['String']>;
-  uidGithub?: InputMaybe<Scalars['Int']>;
+  uidGithub?: InputMaybe<Scalars['String']>;
 };
 
 export type SubscriberUpdateManyInlineInput = {
@@ -4437,7 +4441,7 @@ export type SubscriberUpdateManyInlineInput = {
 
 export type SubscriberUpdateManyInput = {
   name?: InputMaybe<Scalars['String']>;
-  uidGithub?: InputMaybe<Scalars['Int']>;
+  uidGithub?: InputMaybe<Scalars['String']>;
 };
 
 export type SubscriberUpdateManyWithNestedWhereInput = {
@@ -4585,21 +4589,25 @@ export type SubscriberWhereInput = {
   scheduledIn_every?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_none?: InputMaybe<ScheduledOperationWhereInput>;
   scheduledIn_some?: InputMaybe<ScheduledOperationWhereInput>;
-  uidGithub?: InputMaybe<Scalars['Int']>;
-  /** All values greater than the given value. */
-  uidGithub_gt?: InputMaybe<Scalars['Int']>;
-  /** All values greater than or equal the given value. */
-  uidGithub_gte?: InputMaybe<Scalars['Int']>;
+  uidGithub?: InputMaybe<Scalars['String']>;
+  /** All values containing the given string. */
+  uidGithub_contains?: InputMaybe<Scalars['String']>;
+  /** All values ending with the given string. */
+  uidGithub_ends_with?: InputMaybe<Scalars['String']>;
   /** All values that are contained in given list. */
-  uidGithub_in?: InputMaybe<Array<Scalars['Int']>>;
-  /** All values less than the given value. */
-  uidGithub_lt?: InputMaybe<Scalars['Int']>;
-  /** All values less than or equal the given value. */
-  uidGithub_lte?: InputMaybe<Scalars['Int']>;
+  uidGithub_in?: InputMaybe<Array<Scalars['String']>>;
   /** All values that are not equal to given value. */
-  uidGithub_not?: InputMaybe<Scalars['Int']>;
+  uidGithub_not?: InputMaybe<Scalars['String']>;
+  /** All values not containing the given string. */
+  uidGithub_not_contains?: InputMaybe<Scalars['String']>;
+  /** All values not ending with the given string */
+  uidGithub_not_ends_with?: InputMaybe<Scalars['String']>;
   /** All values that are not contained in given list. */
-  uidGithub_not_in?: InputMaybe<Array<Scalars['Int']>>;
+  uidGithub_not_in?: InputMaybe<Array<Scalars['String']>>;
+  /** All values not starting with the given string. */
+  uidGithub_not_starts_with?: InputMaybe<Scalars['String']>;
+  /** All values starting with the given string. */
+  uidGithub_starts_with?: InputMaybe<Scalars['String']>;
   updatedAt?: InputMaybe<Scalars['DateTime']>;
   /** All values greater than the given value. */
   updatedAt_gt?: InputMaybe<Scalars['DateTime']>;
@@ -5607,6 +5615,7 @@ export enum _SystemDateTimeFieldVariation {
 export type CreateSubscriberMutationVariables = Exact<{
   name: Scalars['String'];
   email: Scalars['String'];
+  uidGithub?: InputMaybe<Scalars['String']>;
 }>;
 
 
@@ -5624,10 +5633,17 @@ export type GetLessonsQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type GetLessonsQuery = { __typename?: 'Query', lessons: Array<{ __typename?: 'Lesson', id: string, lessonType: LessonType, availableAt?: any | null, title: string, slug: string }> };
 
+export type GetSubscriberGithubIdQueryVariables = Exact<{
+  uidGithub?: InputMaybe<Scalars['String']>;
+}>;
+
+
+export type GetSubscriberGithubIdQuery = { __typename?: 'Query', subscribers: Array<{ __typename?: 'Subscriber', email: string, id: string, name: string, uidGithub?: string | null }> };
+
 
 export const CreateSubscriberDocument = gql`
-    mutation CreateSubscriber($name: String!, $email: String!) {
-  createSubscriber(data: {name: $name, email: $email}) {
+    mutation CreateSubscriber($name: String!, $email: String!, $uidGithub: String = "") {
+  createSubscriber(data: {name: $name, email: $email, uidGithub: $uidGithub}) {
     id
   }
 }
@@ -5649,6 +5665,7 @@ export type CreateSubscriberMutationFn = Apollo.MutationFunction<CreateSubscribe
  *   variables: {
  *      name: // value for 'name'
  *      email: // value for 'email'
+ *      uidGithub: // value for 'uidGithub'
  *   },
  * });
  */
@@ -5739,3 +5756,41 @@ export function useGetLessonsLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions
 export type GetLessonsQueryHookResult = ReturnType<typeof useGetLessonsQuery>;
 export type GetLessonsLazyQueryHookResult = ReturnType<typeof useGetLessonsLazyQuery>;
 export type GetLessonsQueryResult = Apollo.QueryResult<GetLessonsQuery, GetLessonsQueryVariables>;
+export const GetSubscriberGithubIdDocument = gql`
+    query GetSubscriberGithubID($uidGithub: String) {
+  subscribers(where: {uidGithub: $uidGithub}) {
+    email
+    id
+    name
+    uidGithub
+  }
+}
+    `;
+
+/**
+ * __useGetSubscriberGithubIdQuery__
+ *
+ * To run a query within a React component, call `useGetSubscriberGithubIdQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetSubscriberGithubIdQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetSubscriberGithubIdQuery({
+ *   variables: {
+ *      uidGithub: // value for 'uidGithub'
+ *   },
+ * });
+ */
+export function useGetSubscriberGithubIdQuery(baseOptions?: Apollo.QueryHookOptions<GetSubscriberGithubIdQuery, GetSubscriberGithubIdQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetSubscriberGithubIdQuery, GetSubscriberGithubIdQueryVariables>(GetSubscriberGithubIdDocument, options);
+      }
+export function useGetSubscriberGithubIdLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetSubscriberGithubIdQuery, GetSubscriberGithubIdQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetSubscriberGithubIdQuery, GetSubscriberGithubIdQueryVariables>(GetSubscriberGithubIdDocument, options);
+        }
+export type GetSubscriberGithubIdQueryHookResult = ReturnType<typeof useGetSubscriberGithubIdQuery>;
+export type GetSubscriberGithubIdLazyQueryHookResult = ReturnType<typeof useGetSubscriberGithubIdLazyQuery>;
+export type GetSubscriberGithubIdQueryResult = Apollo.QueryResult<GetSubscriberGithubIdQuery, GetSubscriberGithubIdQueryVariables>;

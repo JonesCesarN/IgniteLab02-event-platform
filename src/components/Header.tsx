@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { Logo } from "./Logo";
 import classNames from 'classnames'
 import { faBars, faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 interface HeaderProps {
   isNavOpen: boolean,
-  setIsNavOpen: React.Dispatch<React.SetStateAction<boolean>>
+  setIsNavOpen: Dispatch<SetStateAction<boolean>>
 }
 
 export const Header = ({ isNavOpen, setIsNavOpen }: HeaderProps) => {

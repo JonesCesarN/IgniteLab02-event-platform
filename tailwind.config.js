@@ -37,6 +37,11 @@ module.exports = {
           100: '#0E0E0E'
         }
       },
+      keyframes: {
+        float: {
+          '100%': { transform: ' translateY(20px)' }
+        }
+      },
     },
   },
   plugins: [],
